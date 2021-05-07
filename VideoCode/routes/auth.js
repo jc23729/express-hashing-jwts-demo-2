@@ -13,6 +13,9 @@ router.get("/", (req, res, next) => {
   res.send("APP IS WORKING!!!");
 });
 
+/** Register user.
+ *   {username, password} => {username} */
+
 router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
