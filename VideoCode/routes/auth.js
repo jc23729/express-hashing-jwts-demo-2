@@ -44,6 +44,13 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+
+// Logging in
+// Try to find user first
+// If exists, compare hashed password to hash of login password
+// bcrypt.compare() resolves to boolean—if true, passwords match!
+
+/** Login: returns {message} on success. */
 router.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
