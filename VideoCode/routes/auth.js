@@ -33,6 +33,7 @@ router.post('/register', async (req, res, next) => {
       return next(new ExpressError("Username taken. Please pick another!", 400));
     }
     return next(e)
+    // console.log(e);
   }
 });
 
