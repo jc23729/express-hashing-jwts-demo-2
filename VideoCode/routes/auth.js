@@ -43,7 +43,18 @@ router.post("/register", async (req, res, next) => {
     return next(e);
   }
 });
-
+// JSON Web Tokens
+// Authentication in Flask
+// Make request with username/password to login route
+// Server authenticates & puts user info session
+// Session is encoded & signed with Flask-specific scheme
+// Session info is sent back to browser in cookie
+// Session info is automatically resent with every request via cookie
+// This works well for traditional web apps & is straightforward to do
+// What if
+// We didn’t want to send auth info with certain requests?
+// We wanted to share authentication info across multiple APIs / hostnames?
+// We’ll use a more API-server friendly process!
 
 // Logging in
 // Try to find user first
