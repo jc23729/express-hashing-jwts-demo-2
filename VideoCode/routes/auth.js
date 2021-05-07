@@ -12,7 +12,7 @@ const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
 router.get("/", (req, res, next) => {
   res.send("APP IS WORKING!!!");
 });
-
+//HASHING PASSWORD
 /** Register user.
  *   {username, password} => {username} */
 
