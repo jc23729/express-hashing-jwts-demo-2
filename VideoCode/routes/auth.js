@@ -29,8 +29,9 @@ router.post("/register", async (req, res, next) => {
     VALUES ($1 , $2)
     RETURNING username
     `, //parameters
-      [username, hashedPassword]);
-    return res.json[results.row[0]]
+      [username, hashedPassword]
+    );
+    return res.json[results.rows[0]];
   } catch (e) {
     return next(e);
   }
