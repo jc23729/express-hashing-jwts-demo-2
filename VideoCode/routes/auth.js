@@ -21,7 +21,7 @@ router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      throw new ExpressError("Username adn passwords are required")
+      throw new ExpressError("Username adn passwords are required");
     }
     //hash the password
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
@@ -37,10 +37,12 @@ router.post("/register", async (req, res, next) => {
     //we return that results function.rows at index of 0 so the first one
     return res.json[results.rows[0]];
   } catch (e) {
-    if (e.code === '23505') {
-      
+    console.log(e);
+    //in postgres their are very specific codes or pg codes  https://www.postgresql.org/docs/10/errcodes-appendix.html
+    if (e.code === "23505") {
+      next(new ExpressError("Please pick another", 400));
     }
-    return next(e)
+    return next(e);
   }
 });
 
