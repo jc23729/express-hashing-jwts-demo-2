@@ -4,6 +4,7 @@ const express = require("express");
 const router = new express.Router();
 const ExpressError = require("../expressError");
 const db = require("../db");
+//to hash a password we need to import bcrypt
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { BCRYPT_WORK_FACTOR, SECRET_KEY } = require("../config");
@@ -20,6 +21,8 @@ router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     //hash the password
+    bcrypt.hash(password)
+    //save to db
   } catch (e) {
     return next (e);
   }
