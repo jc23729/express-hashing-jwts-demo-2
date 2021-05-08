@@ -46,33 +46,6 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-// router.post("/register", async (req, res, next) => {
-//   try {
-//     const { username, password } = req.body;
-//     if (!username || !password) {
-//       throw new ExpressError("Username and password required", 400);
-//     }
-//     // hash password
-//     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
-//     // save to db
-//     const results = await db.query(
-//       `
-//       INSERT INTO users (username, password)
-//       VALUES ($1, $2)
-//       RETURNING username`,
-//       [username, hashedPassword]
-//     );
-//     return res.json(results.rows[0]);
-//   } catch (e) {
-//     // console.log(e);
-//     if (e.code === "23505") {
-//       return next(
-//         new ExpressError("Username taken. Please pick another!", 400)
-//       );
-//     }
-//     return next(e);
-//   }
-// });
 // JSON Web Tokens
 // Authentication in Flask
 // Make request with username/password to login route
@@ -91,7 +64,15 @@ router.post("/register", async (req, res, next) => {
 // If exists, compare hashed password to hash of login password
 // bcrypt.compare() resolves to boolean—if true, passwords match!
 
+
+
 /** Login: returns {message} on success. */
+
+
+router.post('/login', function (req, res, next) {
+  
+})
+
 
 // router.post("/login", async (req, res, next) => {
 //   try {
