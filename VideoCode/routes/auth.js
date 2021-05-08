@@ -23,11 +23,15 @@ router.post("/register", async (req, res, next) => {
     //hash the password
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
     //save to db
-    db.query(`
+    //also we set it up into a function const result
+    const result = await db.query(
+      `
     INSERT INTO users (username, password)
     VALUES ($1 , $2)
     RETURNING username
-    `);
+    `, //parameters
+      [username, hashedPassword]
+    );
   } catch (e) {
     return next(e);
   }
