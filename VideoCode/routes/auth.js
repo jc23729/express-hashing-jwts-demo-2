@@ -16,33 +16,36 @@ router.get("/", (req, res, next) => {
 /** Register user.
  *   {username, password} => {username} */
 
-router.post("/register", async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      throw new ExpressError("Username and password required", 400);
-    }
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
-    // save to db
-    const results = await db.query(
-      `
-      INSERT INTO users (username, password)
-      VALUES ($1, $2)
-      RETURNING username`,
-      [username, hashedPassword]
-    );
-    return res.json(results.rows[0]);
-  } catch (e) {
-    // console.log(e);
-    if (e.code === "23505") {
-      return next(
-        new ExpressError("Username taken. Please pick another!", 400)
-      );
-    }
-    return next(e);
-  }
-});
+
+
+
+// router.post("/register", async (req, res, next) => {
+//   try {
+//     const { username, password } = req.body;
+//     if (!username || !password) {
+//       throw new ExpressError("Username and password required", 400);
+//     }
+//     // hash password
+//     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+//     // save to db
+//     const results = await db.query(
+//       `
+//       INSERT INTO users (username, password)
+//       VALUES ($1, $2)
+//       RETURNING username`,
+//       [username, hashedPassword]
+//     );
+//     return res.json(results.rows[0]);
+//   } catch (e) {
+//     // console.log(e);
+//     if (e.code === "23505") {
+//       return next(
+//         new ExpressError("Username taken. Please pick another!", 400)
+//       );
+//     }
+//     return next(e);
+//   }
+// });
 // JSON Web Tokens
 // Authentication in Flask
 // Make request with username/password to login route
@@ -62,30 +65,37 @@ router.post("/register", async (req, res, next) => {
 // bcrypt.compare() resolves to boolean—if true, passwords match!
 
 /** Login: returns {message} on success. */
-router.post("/login", async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      throw new ExpressError("Username and password required", 400);
-    }
-    const results = await db.query(
-      `SELECT username, password 
-       FROM users
-       WHERE username = $1`,
-      [username]
-    );
-    const user = results.rows[0];
-    if (user) {
-      if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ username }, SECRET_KEY);
-        return res.json({ message: `Logged in!`, token });
-      }
-    }
-    throw new ExpressError("Invalid username/password", 400);
-  } catch (e) {
-    return next(e);
-  }
-});
+
+
+
+// router.post("/login", async (req, res, next) => {
+//   try {
+//     const { username, password } = req.body;
+//     if (!username || !password) {
+//       throw new ExpressError("Username and password required", 400);
+//     }
+//     const results = await db.query(
+//       `SELECT username, password 
+//        FROM users
+//        WHERE username = $1`,
+//       [username]
+//     );
+//     const user = results.rows[0];
+//     if (user) {
+//       if (await bcrypt.compare(password, user.password)) {
+//         const token = jwt.sign({ username }, SECRET_KEY);
+//         return res.json({ message: `Logged in!`, token });
+//       }
+//     }
+//     throw new ExpressError("Invalid username/password", 400);
+//   } catch (e) {
+//     return next(e);
+//   }
+// });
+
+
+
+
 
 router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
   try {
