@@ -37,8 +37,10 @@ router.post("/register", async (req, res, next) => {
     //we return that results function.rows at index of 0 so the first one
     return res.json[results.rows[0]];
   } catch (e) {
-    console.log(e);
-    return next(e);
+    if (e.code === '23505') {
+      
+    }
+    return next(e)
   }
 });
 
