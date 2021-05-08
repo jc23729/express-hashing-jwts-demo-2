@@ -21,13 +21,17 @@ router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     //hash the password
-    bcrypt.hash(password)
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
     //save to db
+    db.query(`
+    INSERT INTO users (username, password)
+    VALUES ($1 , $2)
+    RETURNING username
+    `);
   } catch (e) {
-    return next (e);
+    return next(e);
   }
-})
-
+});
 
 // router.post("/register", async (req, res, next) => {
 //   try {
@@ -76,8 +80,6 @@ router.post("/register", async (req, res, next) => {
 
 /** Login: returns {message} on success. */
 
-
-
 // router.post("/login", async (req, res, next) => {
 //   try {
 //     const { username, password } = req.body;
@@ -85,7 +87,7 @@ router.post("/register", async (req, res, next) => {
 //       throw new ExpressError("Username and password required", 400);
 //     }
 //     const results = await db.query(
-//       `SELECT username, password 
+//       `SELECT username, password
 //        FROM users
 //        WHERE username = $1`,
 //       [username]
@@ -102,10 +104,6 @@ router.post("/register", async (req, res, next) => {
 //     return next(e);
 //   }
 // });
-
-
-
-
 
 router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
   try {
