@@ -20,6 +20,9 @@ router.get("/", (req, res, next) => {
 router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      throw new ExpressError("Username adn passwords are required")
+    }
     //hash the password
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
     //save to db
@@ -31,6 +34,7 @@ router.post("/register", async (req, res, next) => {
     `, //parameters
       [username, hashedPassword]
     );
+    //we return that results function.rows at index of 0 so the first one
     return res.json[results.rows[0]];
   } catch (e) {
     return next(e);
