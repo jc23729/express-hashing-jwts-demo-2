@@ -16,7 +16,14 @@ router.get("/", (req, res, next) => {
 /** Register user.
  *   {username, password} => {username} */
 
-
+router.post("/register", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    //hash the password
+  } catch (e) {
+    return next (e);
+  }
+})
 
 
 // router.post("/register", async (req, res, next) => {
