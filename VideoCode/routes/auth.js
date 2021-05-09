@@ -64,17 +64,32 @@ router.post("/register", async (req, res, next) => {
 // If exists, compare hashed password to hash of login password
 // bcrypt.compare() resolves to boolean—if true, passwords match!
 
-
-
 /** Login: returns {message} on success. */
+//Try to find user first
+// if exists compare hashed password to hash of login password
 
-
-router.post('/login', function (req, res, next) {
+router.post("/login", async (req, res, next) => {
   try {
-      const
-    }catch (e) {}
-})
+    const { username, password } = req.body;
+    //if no username or password throw in express error
+    if (!username || !password) {
+      throw new ExpressError("Username adn passwords are required", 400);
+    }
+    //so now we have to find a user using that username first query based of the user that passed in
+    const results = await db.query(
+      `SELECT username, password
+       FROM users
+       WHERE username = $1`,
+      [username]
+    );
 
+    const user = results.rows[0];
+    if (user) {
+    }
+    throw new ExpressError("Username not found");
+    //we should check to see if their was a user logged in the first place
+  } catch (e) {}
+});
 
 // router.post("/login", async (req, res, next) => {
 //   try {
