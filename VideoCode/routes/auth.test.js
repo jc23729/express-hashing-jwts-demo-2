@@ -15,8 +15,10 @@ let testUserToken;
 let testAdminToken;
 
 beforeEach(async function () {
+  //were going to hash a password
   const hashedPassword = await bcrypt.hash(
     "secret", BCRYPT_WORK_FACTOR);
+  //were going to insert two diffrent users 
   await db.query(`INSERT INTO users VALUES ('test', $1)`,
     [hashedPassword]);
   await db.query(`INSERT INTO users VALUES ('admin', $1)`,
