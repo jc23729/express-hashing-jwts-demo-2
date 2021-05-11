@@ -81,15 +81,16 @@ router.post("/login", async (req, res, next) => {
       `SELECT username, password
        FROM users
        WHERE username = $1`,
-      [username]);
+      [username]
+    );
     //we should check to see if their was a user logged in the first place
     const user = results.rows[0];
     //if there is a user do one thing
     if (user) {
       //if we do find user we do await bcrypt.compare,
       if (await bcrypt.compare(password, user.password)) {
-        //if the bcrypt compare staement is true then it returns res.json message in insomnia 
-        return res.json({ message: "Logged in" })
+        //if the bcrypt compare staement is true then it returns res.json message in insomnia
+        return res.json({ message: "Logged in" });
       }
     }
     //else throw express error
