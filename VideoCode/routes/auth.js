@@ -102,6 +102,8 @@ router.post("/login", async (req, res, next) => {
     return next(e);
   }
 });
+
+
 // Verifying a token
 // demo/auth-api/routes/auth.js
 /** Secret-1 route than only users can access */
