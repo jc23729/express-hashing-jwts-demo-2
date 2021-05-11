@@ -125,7 +125,10 @@ router.get("/topsecret", async function (req, res, next) {
   }
 });
 
-
+//Our fake token 
+// {
+//   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pa2V5SDIyIiwiaWF0IjoxNjIwNzY1NjI0fQ.v0oMsqmulcu8dQa-OKIvOZJOzZHXsOp29S8Mav4Ci00"
+// }
 
 // router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
 //   try {
