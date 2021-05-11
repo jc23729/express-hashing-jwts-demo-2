@@ -9,6 +9,7 @@ function authenticateJWT(req, res, next) {
     const payload = jwt.verify(req.body._token, SECRET_KEY);
     // were gonna just store that payload in req.user 
     req.user = payload;
+    console.log("You have a valid token")
     return next();
   } catch (e) {
     return next();
