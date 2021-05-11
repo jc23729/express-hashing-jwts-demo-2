@@ -84,11 +84,13 @@ router.post("/login", async (req, res, next) => {
       [username]);
     //we should check to see if their was a user logged in the first place
     const user = results.rows[0];
+    //if there is a user do one thing
     if (user) {
       if (await bcrypt.compare(password, user.password)) {
         return res.json({ message: "Logged in" })
       }
     }
+    //else throw express error
     throw new ExpressError("Invalid username/password", 400);
     //we should check to see if their was a user logged in the first place
   } catch (e) {}
