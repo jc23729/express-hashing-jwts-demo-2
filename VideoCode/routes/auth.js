@@ -89,7 +89,7 @@ router.post("/login", async (req, res, next) => {
         return res.json({ message: "Logged in" })
       }
     }
-    throw new ExpressError("Username not found", 400);
+    throw new ExpressError("Invalid username/password", 400);
     //we should check to see if their was a user logged in the first place
   } catch (e) {}
 });
