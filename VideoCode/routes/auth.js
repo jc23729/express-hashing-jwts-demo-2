@@ -143,4 +143,6 @@ router.get("/topsecret", async function (req, res, next) {
 //   return res.json({ msg: `ADMIN DASHBOARD! WELCOME ${req.user.username}` });
 // });
 
-// module.exports = router;
+
+
+module.exports = router;
