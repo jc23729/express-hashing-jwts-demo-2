@@ -96,33 +96,12 @@ router.post("/login", async (req, res, next) => {
     //else throw express error
     throw new ExpressError("Invalid username/password", 400);
     //we should check to see if their was a user logged in the first place
-  } catch (e) {}
+  } catch (e) {
+    return next(e);
+  }
 });
 
-// router.post("/login", async (req, res, next) => {
-//   try {
-//     const { username, password } = req.body;
-//     if (!username || !password) {
-//       throw new ExpressError("Username and password required", 400);
-//     }
-//     const results = await db.query(
-//       `SELECT username, password
-//        FROM users
-//        WHERE username = $1`,
-//       [username]
-//     );
-//     const user = results.rows[0];
-//     if (user) {
-//       if (await bcrypt.compare(password, user.password)) {
-//         const token = jwt.sign({ username }, SECRET_KEY);
-//         return res.json({ message: `Logged in!`, token });
-//       }
-//     }
-//     throw new ExpressError("Invalid username/password", 400);
-//   } catch (e) {
-//     return next(e);
-//   }
-// });
+
 
 router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
   try {
