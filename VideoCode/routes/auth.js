@@ -88,8 +88,9 @@ router.post("/login", async (req, res, next) => {
     //if there is a user do one thing
     if (user) {
       //if we do find user we do await bcrypt.compare,
-      if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ username } SECRET_KEY);
+      if ((await bcrypt.compare(password, user.password)) === true) {
+        let token = jwt.sign({ username }, SECRET_KEY);
+        return res.json({ token });
         //if the bcrypt compare staement is true then it returns res.json message in insomnia
         return res.json({ message: "Logged in" });
       }
