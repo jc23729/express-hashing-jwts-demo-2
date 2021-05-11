@@ -102,23 +102,43 @@ router.post("/login", async (req, res, next) => {
     return next(e);
   }
 });
+// Verifying a token
+// demo/auth-api/routes/auth.js
+/** Secret-1 route than only users can access */
 
-
-
-router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
+router.get("/topsecret", async function (req, res, next) {
   try {
-    return res.json({ msg: "SIGNED IN! THIS IS TOP SECRET.  I LIKE PURPLE." });
-  } catch (e) {
-    return next(new ExpressError("Please login first!", 401));
+    // try to get the token out of the body
+    const tokenFromBody = req.body._token;
+
+    // verify this was a token signed with OUR secret key
+    // (jwt.verify raises error if not)
+    jwt.verify(tokenFromBody, SECRET_KEY);
+
+    return res.json({ message: "Made it!" });
+  }
+
+  catch (err) {
+    return next({ status: 401, message: "Unauthorized" });
   }
 });
 
-router.get("/private", ensureLoggedIn, (req, res, next) => {
-  return res.json({ msg: `Welcome to my VIP section, ${req.user.username}` });
-});
 
-router.get("/adminhome", ensureAdmin, (req, res, next) => {
-  return res.json({ msg: `ADMIN DASHBOARD! WELCOME ${req.user.username}` });
-});
 
-module.exports = router;
+// router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
+//   try {
+//     return res.json({ msg: "SIGNED IN! THIS IS TOP SECRET.  I LIKE PURPLE." });
+//   } catch (e) {
+//     return next(new ExpressError("Please login first!", 401));
+//   }
+// });
+
+// router.get("/private", ensureLoggedIn, (req, res, next) => {
+//   return res.json({ msg: `Welcome to my VIP section, ${req.user.username}` });
+// });
+
+// router.get("/adminhome", ensureAdmin, (req, res, next) => {
+//   return res.json({ msg: `ADMIN DASHBOARD! WELCOME ${req.user.username}` });
+// });
+
+// module.exports = router;
