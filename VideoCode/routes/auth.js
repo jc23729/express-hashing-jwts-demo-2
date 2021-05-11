@@ -86,7 +86,7 @@ router.post("/login", async (req, res, next) => {
     const user = results.rows[0];
     if (user) {
       if (await bcrypt.compare(password, user.password)) {
-        return res.json(`Logged in`)
+        return res.json({ message: "Logged in" })
       }
     }
     throw new ExpressError("Username not found", 400);
