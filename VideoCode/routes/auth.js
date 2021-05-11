@@ -108,43 +108,43 @@ router.post("/login", async (req, res, next) => {
 // demo/auth-api/routes/auth.js
 /** Secret-1 route than only users can access */
 
-router.get("/topsecret", async function (req, res, next) {
-  try {
-    // try to get the token out of the body
-    const tokenFromBody = req.body._token;
+// router.get("/topsecret", async function (req, res, next) {
+//   try {
+//     // try to get the token out of the body
+//     const tokenFromBody = req.body._token;
 
-    // verify this was a token signed with OUR secret key
-    // (jwt.verify raises error if not)
-    jwt.verify(tokenFromBody, SECRET_KEY);
+//     // verify this was a token signed with OUR secret key
+//     // (jwt.verify raises error if not)
+//     jwt.verify(tokenFromBody, SECRET_KEY);
 
-    return res.json({ message: "Made it!" });
-  }
+//     return res.json({ message: "Made it!" });
+//   }
 
-  catch (err) {
-    return next({ status: 401, message: "Unauthorized" });
-  }
-});
+//   catch (err) {
+//     return next({ status: 401, message: "Unauthorized" });
+//   }
+// });
 
 //Our fake token 
 // {
 //   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pa2V5SDIyIiwiaWF0IjoxNjIwNzY1NjI0fQ.v0oMsqmulcu8dQa-OKIvOZJOzZHXsOp29S8Mav4Ci00"
 // }
 
-// router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
-//   try {
-//     return res.json({ msg: "SIGNED IN! THIS IS TOP SECRET.  I LIKE PURPLE." });
-//   } catch (e) {
-//     return next(new ExpressError("Please login first!", 401));
-//   }
-// });
+router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
+  try {
+    return res.json({ msg: "SIGNED IN! THIS IS TOP SECRET.  I LIKE PURPLE." });
+  } catch (e) {
+    return next(new ExpressError("Please login first!", 401));
+  }
+});
 
-// router.get("/private", ensureLoggedIn, (req, res, next) => {
-//   return res.json({ msg: `Welcome to my VIP section, ${req.user.username}` });
-// });
+router.get("/private", ensureLoggedIn, (req, res, next) => {
+  return res.json({ msg: `Welcome to my VIP section, ${req.user.username}` });
+});
 
-// router.get("/adminhome", ensureAdmin, (req, res, next) => {
-//   return res.json({ msg: `ADMIN DASHBOARD! WELCOME ${req.user.username}` });
-// });
+router.get("/adminhome", ensureAdmin, (req, res, next) => {
+  return res.json({ msg: `ADMIN DASHBOARD! WELCOME ${req.user.username}` });
+});
 
 
 
