@@ -81,13 +81,15 @@ router.post("/login", async (req, res, next) => {
       `SELECT username, password
        FROM users
        WHERE username = $1`,
-      [username]
-    );
+      [username]);
     //we should check to see if their was a user logged in the first place
     const user = results.rows[0];
     if (user) {
+      if (await bcrypt.compare(password, user.password)) {
+        return res.json(`Logged in`)
+      }
     }
-    throw new ExpressError("Username not found");
+    throw new ExpressError("Username not found", 400);
     //we should check to see if their was a user logged in the first place
   } catch (e) {}
 });
