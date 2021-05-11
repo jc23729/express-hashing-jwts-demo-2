@@ -139,6 +139,7 @@ router.get("/topsecret", ensureLoggedIn, (req, res, next) => {
 });
 
 router.get("/private", ensureLoggedIn, (req, res, next) => {
+  // at req.user.username were pulling for to make sure it matches
   return res.json({ msg: `Welcome to my VIP section, ${req.user.username}` });
 });
 
