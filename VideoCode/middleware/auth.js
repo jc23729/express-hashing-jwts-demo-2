@@ -2,10 +2,12 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 const ExpressError = require("../expressError");
 
-
+//middleware function 
 function authenticateJWT(req, res, next) {
   try {
+    //if this token is verified it will return that actual data in token and save it in const payload
     const payload = jwt.verify(req.body._token, SECRET_KEY);
+    // were gonna just store that payload in req.user 
     req.user = payload;
     return next();
   } catch (e) {
