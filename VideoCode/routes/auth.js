@@ -70,6 +70,7 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   try {
+    //we try to pull the username and password using req.body
     const { username, password } = req.body;
     //if no username or password throw in express error
     if (!username || !password) {
@@ -82,7 +83,7 @@ router.post("/login", async (req, res, next) => {
        WHERE username = $1`,
       [username]
     );
-
+    //we should check to see if their was a user logged in the first place
     const user = results.rows[0];
     if (user) {
     }
